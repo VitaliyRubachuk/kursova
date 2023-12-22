@@ -1,0 +1,13 @@
+debug/adminwindow.o
+debug/databasemanager.o
+debug/main.o
+debug/mainwindow.o
+debug/managerwindow.o
+debug/usercard.o
+debug/userwindow.o
+debug/moc_adminwindow.o
+debug/moc_databasemanager.o
+debug/moc_mainwindow.o
+debug/moc_managerwindow.o
+debug/moc_usercardmanager.o
+debug/moc_userwindowmanager.o

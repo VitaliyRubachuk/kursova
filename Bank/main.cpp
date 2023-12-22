@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "bank.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {

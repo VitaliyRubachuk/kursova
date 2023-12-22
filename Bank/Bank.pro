@@ -10,15 +10,22 @@ CONFIG += c++17
 
 SOURCES += \
     adminwindow.cpp \
+    databasemanager.cpp \
     main.cpp \
-    bank.cpp
+    mainwindow.cpp \
+    managerwindow.cpp \
+    usercard.cpp \
+    userwindow.cpp
 
 HEADERS += \
     adminwindow.h \
-    bank.h
+    databasemanager.h \
+    mainwindow.h \
+    managerwindow.h \
+    usercardmanager.h \
+    userwindowmanager.h
 
-FORMS += \
-    bank.ui
+FORMS +=
 
 QT += sql
 
