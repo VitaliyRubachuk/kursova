@@ -4,6 +4,8 @@
 #include <QCryptographicHash>
 #include <QMessageBox>
 #include <QCoreApplication>
+#include <QInputDialog>
+#include <QLineEdit>
 
 DatabaseManager::DatabaseManager(QObject *parent) : QObject(parent) {}
 
@@ -91,6 +93,15 @@ void DatabaseManager::createCardsTable()
 
 void DatabaseManager::clearTable()
 {
+    QString userCode = QInputDialog::getText(nullptr, "Введіть код", "Введіть код:", QLineEdit::Normal, "", nullptr, Qt::WindowFlags(), Qt::ImhNone);
+
+    if (userCode != "1111")
+    {
+        QMessageBox messageBox;
+        messageBox.warning(nullptr, "Помилка", "Введений невірний код. Очищення таблиці відхилено.");
+        return;
+    }
+
     QSqlQuery query(db);
     query.exec("DELETE FROM CreditHistory");
     query.exec("DELETE FROM Cards");
@@ -99,6 +110,8 @@ void DatabaseManager::clearTable()
     query.exec("DELETE FROM Users WHERE role <> 'admin' AND role <> 'manager'");
     emit tablesCleared();
 }
+
+
 
 void DatabaseManager::updateCreditSequence()
 {

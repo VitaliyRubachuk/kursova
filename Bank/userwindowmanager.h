@@ -1,11 +1,11 @@
 #ifndef USERWINDOWMANAGER_H
 #define USERWINDOWMANAGER_H
-
 #include <QObject>
 #include <QDialog>
 #include <QString>
 #include "mainwindow.h"
 #include "usercardmanager.h"
+
 class Bank;
 
 class UserCardManager;
@@ -32,10 +32,6 @@ private:
 
 public slots:
     void showUserCards();
-
-
-signals:
-
 };
 
 #endif // USERWINDOWMANAGER_H

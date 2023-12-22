@@ -47,8 +47,8 @@ private:
     int pinValue;
     void showUserWindow(const QString& username);
     bool createConnection();
-    void setupUI();
     void applyStyles();
+
 };
 
 #endif // MAINWINDOW_H

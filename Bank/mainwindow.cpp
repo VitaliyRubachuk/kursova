@@ -20,6 +20,8 @@
 #include "databasemanager.h"
 #include "managerwindow.h"
 #include "userwindowmanager.h"
+#include <QApplication>
+#include <QDir>
 
 Bank::Bank(QWidget *parent) : QMainWindow(parent)
 {
@@ -85,8 +87,9 @@ Bank::Bank(QWidget *parent) : QMainWindow(parent)
     centralWidget->setAutoFillBackground(true);
     centralWidget->setPalette(pal);
 
+    QString imagePath = QDir(QCoreApplication::applicationDirPath()).filePath("Картинки/1221.png");
     QLabel *backgroundLabel = new QLabel(centralWidget);
-    QPixmap backgroundImage("D:/Курсова/1221.png");
+    QPixmap backgroundImage(imagePath);
     backgroundLabel->setPixmap(backgroundImage);
     backgroundLabel->setScaledContents(true);
 
@@ -206,7 +209,6 @@ void Bank::registerClicked()
     QDateTime currentDateTime = QDateTime::currentDateTime();
     QString creationDate = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
     QSqlQuery query;
-    // Use the member variable query
     query.prepare("INSERT INTO Users (username, password, role, CreationDate) VALUES (:username, :password, :role, :creationDate)");
     query.bindValue(":username", username);
     query.bindValue(":password", hashedPasswordStr);

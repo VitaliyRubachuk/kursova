@@ -21,7 +21,8 @@
 #include "userwindowmanager.h"
 #include "usercardmanager.h"
 #include "databasemanager.h"
-
+#include <QApplication>
+#include <QDir>
 UserCardManager::UserCardManager(QObject *parent) : QObject(parent) {}
 
 void UserCardManager::showUserCards(const QString& username)
@@ -89,7 +90,6 @@ void UserCardManager::showUserCards(const QString& username)
 
 bool UserCardManager::checkPin(const QString& enteredPin, const QString& storedPin)
 {
-    // Хешування введеного пін-коду для порівняння зі збереженим хешем
     QByteArray hashedEnteredPin = QCryptographicHash::hash(enteredPin.toUtf8(), QCryptographicHash::Sha256);
 
     return (hashedEnteredPin.toHex() == storedPin);
@@ -167,8 +167,9 @@ void UserCardManager::cardButtonClicked()
                 frameLayout->addWidget(creditAmountLabel);
                 layout->addWidget(frame);
 
+                QString imagePath = QDir(QCoreApplication::applicationDirPath()).filePath("Картинки/13.png");
                 QLabel *imageLabel = new QLabel(cardDetailsDialog);
-                QPixmap image("D:/Курсова/13.png");
+                QPixmap image(imagePath);
                 imageLabel->setPixmap(image);
                 imageLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
                 layout->addWidget(imageLabel);
@@ -280,7 +281,7 @@ void UserCardManager::getCardButtonClicked()
                 showUserCards(currentUsername);
                 getCardButton->setEnabled(false);
             });
-
+            cardDialog->close();
             getCardDialog->exec();
         }
 }

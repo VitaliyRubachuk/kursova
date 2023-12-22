@@ -3506,7 +3506,13 @@ debug/mainwindow.o: ../Bank/mainwindow.cpp ../Bank/mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QtGlobal \
 		C:/Qt/6.6.0/mingw_64/include/QtSql/QSqlError \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QDateTime \
-		../Bank/managerwindow.h
+		../Bank/managerwindow.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QApplication \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qapplication.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qguiapplication.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qinputmethod.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qguiapplication_platform.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QDir
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\Bank\mainwindow.cpp
 
 debug/managerwindow.o: ../Bank/managerwindow.cpp ../Bank/managerwindow.h \
@@ -4275,7 +4281,13 @@ debug/usercard.o: ../Bank/usercard.cpp ../Bank/mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QWidget \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QtGlobal \
 		C:/Qt/6.6.0/mingw_64/include/QtSql/QSqlError \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QDateTime
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QDateTime \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QApplication \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qapplication.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qguiapplication.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qinputmethod.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qguiapplication_platform.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QDir
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\usercard.o ..\Bank\usercard.cpp
 
 debug/userwindow.o: ../Bank/userwindow.cpp ../Bank/mainwindow.h \
@@ -4668,7 +4680,13 @@ debug/userwindow.o: ../Bank/userwindow.cpp ../Bank/mainwindow.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QWidget \
 		C:/Qt/6.6.0/mingw_64/include/QtCore/QtGlobal \
 		C:/Qt/6.6.0/mingw_64/include/QtSql/QSqlError \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QDateTime
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QDateTime \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QApplication \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qapplication.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qguiapplication.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qinputmethod.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qguiapplication_platform.h \
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QDir
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\userwindow.o ..\Bank\userwindow.cpp
 
 debug/moc_adminwindow.o: debug/moc_adminwindow.cpp 

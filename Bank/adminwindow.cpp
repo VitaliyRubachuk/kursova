@@ -8,7 +8,9 @@
 #include <QLineEdit>
 #include <QMessageBox>
 
-AdminWindow::AdminWindow(QWidget *parent) : QDialog(parent)
+AdminWindow::AdminWindow(QWidget *parent) : QDialog(parent){showAdminWindow();}
+
+void AdminWindow::showAdminWindow()
 {
     setWindowTitle("Адміністративна панель");
     setFixedSize(600, 600);

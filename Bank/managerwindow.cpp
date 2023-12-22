@@ -14,7 +14,9 @@
 #include <QSqlQueryModel>
 #include "databasemanager.h"
 
-ManagerWindow::ManagerWindow(QWidget *parent) : QDialog(parent)
+ManagerWindow::ManagerWindow(QWidget *parent) : QDialog(parent){showManagerWindow();}
+
+void ManagerWindow::showManagerWindow()
 {
     setWindowTitle("Менеджерське вікно");
     setFixedSize(700, 500);
@@ -270,7 +272,8 @@ bool ManagerWindow::canTakeLoan(const QString& username)
     query.prepare("SELECT canTakeLoan FROM Users WHERE username = :username");
     query.bindValue(":username", username);
 
-    if (query.exec() && query.next()) {
+    if (query.exec() && query.next())
+    {
         return query.value(0).toBool();
     }
 

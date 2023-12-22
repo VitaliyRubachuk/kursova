@@ -20,7 +20,8 @@
 #include "databasemanager.h"
 #include "userwindowmanager.h"
 #include "usercardmanager.h"
-
+#include <QApplication>
+#include <QDir>
 UserWindowManager::UserWindowManager(QObject *parent) : QObject(parent), userWindow(nullptr) {userCardManagerInstance = new UserCardManager();}
 
 void UserWindowManager::showUserWindow(const QString& username)
@@ -139,8 +140,9 @@ void UserWindowManager::showUserWindow(const QString& username)
 
     connect(applyForLoanButton, &QPushButton::clicked, [=]() {showLoanDialog(username); });
 
+    QString imagePath = QDir(QCoreApplication::applicationDirPath()).filePath("Картинки/111.png");
     QLabel *backgroundLabel = new QLabel();
-    QPixmap backgroundImage("D:/Курсова/111.png");
+    QPixmap backgroundImage(imagePath);
     backgroundLabel->setPixmap(backgroundImage);
     backgroundLabel->setScaledContents(true);
     layout->addWidget(backgroundLabel);

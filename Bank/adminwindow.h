@@ -24,6 +24,7 @@ public:
     void showlUserInfo();
     void showAdditionalUserInfo();
     QTextEdit *accountList;
+    void showAdminWindow();
 signals:
     void tableCleared();
 };

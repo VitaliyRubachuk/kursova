@@ -1,6 +1,5 @@
 #ifndef USERCARDMANAGER_H
 #define USERCARDMANAGER_H
-
 #include <QObject>
 #include <QDialog>
 #include <QVBoxLayout>
@@ -16,7 +15,6 @@
 #include <QCryptographicHash>
 #include "userwindowmanager.h"
 #include "databasemanager.h"
-
 
 class UserWindowManager;
 

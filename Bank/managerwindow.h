@@ -25,7 +25,7 @@ private slots:
     void applyTextEditStyle(QTextEdit* textEdit);
     void applyButtonStyle(QPushButton* button);
     bool canTakeLoan(const QString& username);
-
+    void showManagerWindow();
 private:
     QPushButton *repayCreditButton;
     QTableWidget *creditTable;
