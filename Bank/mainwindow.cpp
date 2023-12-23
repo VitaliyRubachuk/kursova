@@ -125,6 +125,7 @@ void Bank::togglePasswordVisibility()
 void Bank::createUserTable()
 {
     db->createUserTable();
+
 }
 
 void Bank::createCreditTable()
@@ -205,11 +206,18 @@ void Bank::registerClicked()
 
     QByteArray hashedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Md5).toHex();
     QString hashedPasswordStr = QString::fromLatin1(hashedPassword);
+    QSqlQuery query;
+    query.exec("SELECT MAX(id) FROM Users");
+    query.next();
+    int maxId = query.value(0).toInt();
+    int nextId = maxId + 1;
 
     QDateTime currentDateTime = QDateTime::currentDateTime();
     QString creationDate = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
-    QSqlQuery query;
-    query.prepare("INSERT INTO Users (username, password, role, CreationDate) VALUES (:username, :password, :role, :creationDate)");
+
+    // Ось тут потрібно замінити код на наведений вище
+    query.prepare("INSERT INTO Users (id, username, password, role, CreationDate) VALUES (:id, :username, :password, :role, :creationDate)");
+    query.bindValue(":id", nextId); // Додайте прив'язку для поля id
     query.bindValue(":username", username);
     query.bindValue(":password", hashedPasswordStr);
     query.bindValue(":role", "user");
@@ -221,9 +229,11 @@ void Bank::registerClicked()
         usernameEdit->clear();
         passwordEdit->clear();
     } else {
-        QMessageBox::critical(this, "Реєстрація", "Помилка при створенні аккаунта!");
+        qDebug() << "Помилка при створенні аккаунта:" << query.lastError().text();
+            QMessageBox::critical(this, "Реєстрація", "Помилка при створенні аккаунта!");
     }
 }
+
 
 
 

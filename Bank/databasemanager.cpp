@@ -17,15 +17,23 @@ DatabaseManager::~DatabaseManager()
 
 bool DatabaseManager::createConnection()
 {
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("users.db");
+    db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("127.0.0.1");
+    db.setPort(3306);
+    db.setDatabaseName("users");
+    db.setUserName("root");
+    db.setPassword("");
 
     if (!db.open())
     {
+        qDebug() << "Помилка підключення до бази даних:" << db.lastError().text();
         return false;
     }
+    qDebug() << "Підключення до бази даних встановлено.";
     return true;
 }
+
+
 
 void DatabaseManager::createUserTable()
 {
@@ -42,9 +50,17 @@ void DatabaseManager::createUserTable()
     int maxId = query.value(0).toInt();
     int nextId = maxId + 1;
 
-    query.exec("CREATE TABLE IF NOT EXISTS Users (""id INTEGER PRIMARY KEY,""username TEXT UNIQUE,""password TEXT,""role TEXT,""CreationDate TEXT DEFAULT CURRENT_TIMESTAMP,""employmentPlace TEXT,""salary INTEGER,""age INTEGER,""canTakeLoan BOOLEAN DEFAULT FALSE)");
+    query.exec("CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, username VARCHAR(255) UNIQUE, password TEXT, role TEXT, CreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP, employmentPlace TEXT, salary INTEGER, age INTEGER, canTakeLoan BOOLEAN DEFAULT FALSE)");
 
-    query.prepare("INSERT OR IGNORE INTO Users (id, username, password, role, employmentPlace, salary, age, canTakeLoan) ""VALUES (:id, :username, :password, :role, :employmentPlace, :salary, :age, :canTakeLoan)");
+qDebug() << "Виконується запит: " << query.lastQuery();
+if (!query.exec()) {
+    qDebug() << "Запит не вдалося виконати: " << query.lastError().text();
+    QMessageBox::critical(nullptr, "Помилка", "Помилка виконання запиту: " + query.lastError().text());
+} else {
+    qDebug() << "Запит успішно виконано";
+}
+
+    query.prepare("INSERT IGNORE INTO Users (id, username, password, role, employmentPlace, salary, age, canTakeLoan) ""VALUES (:id, :username, :password, :role, :employmentPlace, :salary, :age, :canTakeLoan)");
     query.bindValue(":id", nextId);
     query.bindValue(":username", "myadmin");
     query.bindValue(":password", hashedPasswordAdmin);
@@ -65,25 +81,38 @@ void DatabaseManager::createUserTable()
     query.bindValue(":age", 22);
     query.bindValue(":canTakeLoan", false);
     query.exec();
+    if (!query.exec())
+    {
+        qDebug() << "Помилка SQL запиту:" << query.lastError().text();
+                                                              QMessageBox::critical(nullptr, "Помилка", "Помилка при вставці даних в Users");
+    }
 }
-
-
-
 
 void DatabaseManager::createCreditTable()
 {
     QSqlQuery query(db);
 
-    query.exec("CREATE TABLE IF NOT EXISTS CreditHistory (id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Amount REAL, Date TEXT)");
+    bool success = query.exec("CREATE TABLE IF NOT EXISTS CreditHistory (id INTEGER PRIMARY KEY AUTO_INCREMENT, Username TEXT, Amount REAL, Date TEXT)");
+
+    if (!success)
+    {
+        qDebug() << "Помилка SQL запиту:" << query.lastError().text();
+        QMessageBox::critical(nullptr, "Помилка", "Помилка при створенні таблиці CreditHistory");
+    }
+    else
+    {
+        qDebug() << "Таблиця CreditHistory успішно створена!";
+    }
 }
+
 
 void DatabaseManager::createCardsTable()
 {
     QSqlQuery query(db);
 
-    bool success = query.exec("CREATE TABLE IF NOT EXISTS Cards (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Pin TEXT, CardNumber TEXT, Username TEXT, City TEXT, Address TEXT, TaxCode TEXT)");
-
-    if (success) {
+    bool success = query.exec("CREATE TABLE IF NOT EXISTS Cards (Id INTEGER PRIMARY KEY AUTO_INCREMENT, Name TEXT, Pin TEXT, CardNumber TEXT, Username TEXT, City TEXT, Address TEXT, TaxCode TEXT)");
+    if (success)
+    {
         qDebug() << "Таблиця Cards успішно створена!";
     } else {
         qDebug() << "Таблиця Cards не створена!:" << query.lastError().text();
