@@ -52,13 +52,14 @@ void DatabaseManager::createUserTable()
 
     query.exec("CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, username VARCHAR(255) UNIQUE, password TEXT, role TEXT, CreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP, employmentPlace TEXT, salary INTEGER, age INTEGER, canTakeLoan BOOLEAN DEFAULT FALSE)");
 
-qDebug() << "Виконується запит: " << query.lastQuery();
-if (!query.exec()) {
+    qDebug() << "Виконується запит: " << query.lastQuery();
+    if (!query.exec())
+    {
     qDebug() << "Запит не вдалося виконати: " << query.lastError().text();
-    QMessageBox::critical(nullptr, "Помилка", "Помилка виконання запиту: " + query.lastError().text());
-} else {
+    } else
+    {
     qDebug() << "Запит успішно виконано";
-}
+    }
 
     query.prepare("INSERT IGNORE INTO Users (id, username, password, role, employmentPlace, salary, age, canTakeLoan) ""VALUES (:id, :username, :password, :role, :employmentPlace, :salary, :age, :canTakeLoan)");
     query.bindValue(":id", nextId);
@@ -81,13 +82,7 @@ if (!query.exec()) {
     query.bindValue(":age", 22);
     query.bindValue(":canTakeLoan", false);
     query.exec();
-    if (!query.exec())
-    {
-        qDebug() << "Помилка SQL запиту:" << query.lastError().text();
-                                                              QMessageBox::critical(nullptr, "Помилка", "Помилка при вставці даних в Users");
-    }
 }
-
 void DatabaseManager::createCreditTable()
 {
     QSqlQuery query(db);
@@ -97,7 +92,6 @@ void DatabaseManager::createCreditTable()
     if (!success)
     {
         qDebug() << "Помилка SQL запиту:" << query.lastError().text();
-        QMessageBox::critical(nullptr, "Помилка", "Помилка при створенні таблиці CreditHistory");
     }
     else
     {
