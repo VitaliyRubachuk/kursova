@@ -58,7 +58,7 @@ void AdminWindow::showAdminWindow()
 
 void AdminWindow::clearTable() {
     emit tableCleared();
-    refreshAccounts(); // Оновлення після очищення таблиці
+    refreshAccounts();
 }
 
 
@@ -68,7 +68,8 @@ void AdminWindow::showAccounts()
 
     QSqlQuery query("SELECT id, username, CreationDate FROM Users ORDER BY id ASC");
     QString accounts;
-    while (query.next()) {
+    while (query.next())
+    {
         accounts += "Номер аккаунту: " + query.value(0).toString() + "\nЛогін: " + query.value(1).toString() + "\nДата створення: " + query.value(2).toString() + "\n\n";
     }
     accountList->setText(accounts);
@@ -108,7 +109,8 @@ void AdminWindow::showCredits()
         }
     }
 
-    if (!creditsExist) {
+    if (!creditsExist)
+    {
         accountList->setText("Немає кредитів");
     } else {
         accountList->setText(accounts);
@@ -245,9 +247,11 @@ void AdminWindow::showAdditionalUserInfo()
             return;
         }
 
-        if (selectedUserId == 1) {
+        if (selectedUserId == 1)
+        {
             QMessageBox::information(additionalInfoDialog, "Інформація", "Адміністратор банку");
-        } else if (selectedUserId == 2) {
+        } else if (selectedUserId == 2)
+        {
             QMessageBox::information(additionalInfoDialog, "Інформація", "Менеджер банку");
         } else {
             QSqlQuery userInfoQuery;
@@ -265,7 +269,8 @@ void AdminWindow::showAdditionalUserInfo()
                                    "<b>Зарплата:</b> " + QString::number(salary) +
                                    "<br><b>Вік:</b> " + QString::number(age) + "<br><br>";
 
-                if (canTakeLoan) {
+                if (canTakeLoan)
+                {
                     userInfo += "<b>Одобрено в кредитуванні!</b>";
                 } else {
                     userInfo += "<b>Відмовлено в кредитуванні!</b>";

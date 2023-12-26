@@ -270,7 +270,7 @@ void UserCardManager::getCardButtonClicked()
                 params.lastName = lastNameLineEdit->text();
                 params.firstName = nameLineEdit->text();
                 params.pin = pinLineEdit->text();
-                params.cardNumber = cardNumber; // це залежить від вашої логіки отримання номеру картки
+                params.cardNumber = cardNumber;
                 params.username = currentUsername;
                 params.city = cityLineEdit->text();
                 params.address = addressLineEdit->text();

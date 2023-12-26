@@ -2732,7 +2732,16 @@ debug/databasemanager.o: ../Bank/databasemanager.cpp ../Bank/databasemanager.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QMessageBox \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qdialog.h \
-		C:/Qt/6.6.0/mingw_64/include/QtCore/QCoreApplication
+		C:/Qt/6.6.0/mingw_64/include/QtCore/QCoreApplication \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QInputDialog \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qinputdialog.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/qlineedit.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextcursor.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextdocument.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextformat.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qpen.h \
+		C:/Qt/6.6.0/mingw_64/include/QtGui/qtextoption.h \
+		C:/Qt/6.6.0/mingw_64/include/QtWidgets/QLineEdit
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\databasemanager.o ..\Bank\databasemanager.cpp
 
 debug/main.o: ../Bank/main.cpp C:/Qt/6.6.0/mingw_64/include/QtWidgets/QApplication \

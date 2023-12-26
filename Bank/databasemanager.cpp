@@ -20,7 +20,6 @@ bool DatabaseManager::createConnection()
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");
     db.setPort(3306);
-    db.setDatabaseName("users");
     db.setUserName("root");
     db.setPassword("");
 
@@ -29,7 +28,26 @@ bool DatabaseManager::createConnection()
         qDebug() << "Помилка підключення до бази даних:" << db.lastError().text();
         return false;
     }
-    qDebug() << "Підключення до бази даних встановлено.";
+
+    QSqlQuery createDbQuery(db);
+    if (createDbQuery.exec("CREATE DATABASE IF NOT EXISTS users"))
+    {
+        qDebug() << "База даних 'users' успішно створена або вже існує.";
+    }
+    else
+    {
+        qDebug() << "Помилка створення бази даних 'users':" << createDbQuery.lastError().text();
+            return false;
+    }
+    db.setDatabaseName("users");
+
+    if (!db.open())
+    {
+        qDebug() << "Помилка підключення до бази даних 'users':" << db.lastError().text();
+        return false;
+    }
+
+    qDebug() << "Підключення до бази даних 'users' встановлено.";
     return true;
 }
 
@@ -66,8 +84,8 @@ void DatabaseManager::createUserTable()
     query.bindValue(":username", "myadmin");
     query.bindValue(":password", hashedPasswordAdmin);
     query.bindValue(":role", "admin");
-    query.bindValue(":employmentPlace", "Bank.ua");  // Додати значення за замовчуванням для роботи
-    query.bindValue(":salary", 100000); // Додати значення за замовчуванням для зарплати адміна
+    query.bindValue(":employmentPlace", "Bank.ua");
+    query.bindValue(":salary", 100000);
     query.bindValue(":age", 34);
     query.bindValue(":canTakeLoan", false);
     query.exec();
@@ -77,25 +95,26 @@ void DatabaseManager::createUserTable()
     query.bindValue(":username", "manager");
     query.bindValue(":password", hashedPasswordManager);
     query.bindValue(":role", "manager");
-    query.bindValue(":employmentPlace", "Bank.ua");  // Додати значення за замовчуванням для роботи
-    query.bindValue(":salary", 50000);  // Додати значення за замовчуванням для зарплати менеджера
+    query.bindValue(":employmentPlace", "Bank.ua");
+    query.bindValue(":salary", 50000);
     query.bindValue(":age", 22);
     query.bindValue(":canTakeLoan", false);
     query.exec();
 }
+
 void DatabaseManager::createCreditTable()
 {
     QSqlQuery query(db);
 
-    bool success = query.exec("CREATE TABLE IF NOT EXISTS CreditHistory (id INTEGER PRIMARY KEY AUTO_INCREMENT, Username TEXT, Amount REAL, Date TEXT)");
+    bool success = query.exec("CREATE TABLE IF NOT EXISTS CreditHistory (id INTEGER PRIMARY KEY AUTO_INCREMENT, Username VARCHAR(255), Amount REAL, Date TEXT, FOREIGN KEY (Username) REFERENCES Users(username))");
 
     if (!success)
     {
-        qDebug() << "Помилка SQL запиту:" << query.lastError().text();
+    qDebug() << "Помилка SQL запиту:" << query.lastError().text();
     }
     else
     {
-        qDebug() << "Таблиця CreditHistory успішно створена!";
+    qDebug() << "Таблиця CreditHistory успішно створена!";
     }
 }
 
@@ -104,12 +123,13 @@ void DatabaseManager::createCardsTable()
 {
     QSqlQuery query(db);
 
-    bool success = query.exec("CREATE TABLE IF NOT EXISTS Cards (Id INTEGER PRIMARY KEY AUTO_INCREMENT, Name TEXT, Pin TEXT, CardNumber TEXT, Username TEXT, City TEXT, Address TEXT, TaxCode TEXT)");
+    bool success = query.exec("CREATE TABLE IF NOT EXISTS Cards (Id INTEGER PRIMARY KEY AUTO_INCREMENT, Name TEXT, Pin TEXT, CardNumber TEXT, Username VARCHAR(255), City TEXT, Address TEXT, TaxCode TEXT, FOREIGN KEY (Username) REFERENCES Users(username))");
+
     if (success)
     {
-        qDebug() << "Таблиця Cards успішно створена!";
+    qDebug() << "Таблиця Cards успішно створена!";
     } else {
-        qDebug() << "Таблиця Cards не створена!:" << query.lastError().text();
+    qDebug() << "Таблиця Cards не створена!:" << query.lastError().text();
     }
 }
 
@@ -236,3 +256,4 @@ void DatabaseManager::updateUserLoanStatus(bool canTakeLoan, const QString& user
         qDebug() << "Помилка при оновленні loan статусу:" << query.lastError().text();
     }
 }
+

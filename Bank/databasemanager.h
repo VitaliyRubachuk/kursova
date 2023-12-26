@@ -32,7 +32,6 @@ public:
     void updateCardNumbers();
     void deleteCard(const QString& username);
     void updateUserLoanStatus(bool canTakeLoan, const QString& username);
-
 private:
     QSqlDatabase db;
     int pinValue;

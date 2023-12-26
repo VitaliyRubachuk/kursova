@@ -114,9 +114,6 @@ Bank::~Bank()
     delete db;
 }
 
-
-
-
 void Bank::togglePasswordVisibility()
 {
     passwordEdit->setEchoMode(passwordEdit->echoMode() == QLineEdit::Password ? QLineEdit::Normal : QLineEdit::Password);
@@ -215,9 +212,8 @@ void Bank::registerClicked()
     QDateTime currentDateTime = QDateTime::currentDateTime();
     QString creationDate = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
 
-    // Ось тут потрібно замінити код на наведений вище
     query.prepare("INSERT INTO Users (id, username, password, role, CreationDate) VALUES (:id, :username, :password, :role, :creationDate)");
-    query.bindValue(":id", nextId); // Додайте прив'язку для поля id
+    query.bindValue(":id", nextId);
     query.bindValue(":username", username);
     query.bindValue(":password", hashedPasswordStr);
     query.bindValue(":role", "user");

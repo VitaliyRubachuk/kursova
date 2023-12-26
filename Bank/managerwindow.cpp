@@ -56,7 +56,8 @@ void ManagerWindow::repayCredit()
 {
     QSqlQuery query("SELECT id FROM CreditHistory ORDER BY id ASC");
 
-    if (!query.next()) {
+    if (!query.next())
+    {
         QMessageBox::warning(this, "Попередження", "Немає кредитів для оплати!");
         return;
     }
@@ -175,7 +176,8 @@ void ManagerWindow::showIssueCreditDialog()
     layout->addWidget(amountLineEdit);
     layout->addWidget(issueCreditButton);
 
-    connect(issueCreditButton, &QPushButton::clicked, [=]() {
+    connect(issueCreditButton, &QPushButton::clicked, [=]()
+            {
         QString account = accountLineEdit->text();
         QString amount = amountLineEdit->text();
         issueCreditToAccount(account, amount);
@@ -220,13 +222,20 @@ void ManagerWindow::issueCreditToAccount(const QString& username, const QString&
         updateCreditTable();
         return;
     }
-
     QSqlQuery query;
-    query.prepare("INSERT INTO CreditHistory (Username, Amount, Date) "
-                  "VALUES (:username, :amount, :creditDate)");
-    query.bindValue(":username", username);
-    query.bindValue(":amount", creditAmount);
-    query.bindValue(":creditDate", QDateTime::currentDateTime().toString(Qt::ISODate));
+    QSqlQuery maxIdQuery("SELECT MAX(id) FROM CreditHistory");
+    if (maxIdQuery.exec() && maxIdQuery.next())
+    {
+        int maxId = maxIdQuery.value(0).toInt();
+        int newCreditId = maxId + 1;
+
+
+        query.prepare("INSERT INTO CreditHistory (id, Username, Amount, Date) ""VALUES (:id, :username, :amount, :creditDate)");
+        query.bindValue(":id", newCreditId);
+        query.bindValue(":username", username);
+        query.bindValue(":amount", creditAmount);
+        query.bindValue(":creditDate", QDateTime::currentDateTime().toString(Qt::ISODate));
+    }
 
     if (query.exec())
     {
